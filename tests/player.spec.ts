@@ -123,6 +123,10 @@ test.describe('on a touchscreen', () => {
 		await swipe(cdp, middle, { x: middle.x, y: box.y + 8 });
 		await swipe(cdp, middle, { x: middle.x, y: box.y + box.height - 8 });
 
+		// Checked first: if a swipe escaped the page entirely - a history
+		// gesture, a pull-to-refresh - the failure should name the escape,
+		// not time out looking for a card on a page that is no longer there.
+		expect(page.url()).toContain('/app/pl');
 		expect(await root.getAttribute('data-card')).toBe(opened);
 		expect(await page.evaluate(() => [window.scrollX, window.scrollY])).toEqual([0, 0]);
 	});
