@@ -249,9 +249,10 @@
 		display: inline-flex;
 		align-items: center;
 		min-height: 44px;
-		/* A hair more on the left: the chevron's glyph sits inset in its own
-		   box, and equal padding reads as more air on the right. */
-		padding: 0.3rem 0.55rem 0.3rem 0.65rem;
+		/* More on the left than the right: the chevron's glyph sits inset in
+		   its own box, and the flag is the pill's face — it needs air before
+		   it the way a word needs its margin. */
+		padding: 0.3rem 0.55rem 0.3rem 0.85rem;
 		border: 1px solid var(--faint-ink);
 		border-radius: 999px;
 		background: var(--card);
@@ -321,6 +322,17 @@
 		background: var(--card);
 		box-shadow: var(--lift);
 		list-style: none;
+	}
+
+	/* The prose list spacing stops at this menu: its rows are rows, and the
+	   margin a paragraph's bullet carries would hang below the last row as
+	   air the card's top does not have. */
+	.menu li {
+		margin: 0;
+	}
+
+	.menu li + li {
+		margin-top: 0.25rem;
 	}
 
 	.menu a {
