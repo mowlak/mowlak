@@ -189,7 +189,12 @@
 		background: var(--paper);
 		overscroll-behavior: none;
 		grid-template-rows: 1fr auto;
-		touch-action: manipulation;
+		/* None rather than manipulation: manipulation still lets a drag start
+		   a pan, and on a page with nothing to scroll a pan chains into the
+		   browser's own overscroll gestures - history navigation, refresh.
+		   Nothing on this surface pans, so the browser is told no gesture
+		   ever begins here; taps are unaffected. */
+		touch-action: none;
 		user-select: none;
 		-webkit-user-select: none;
 		-webkit-touch-callout: none;

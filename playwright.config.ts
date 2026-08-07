@@ -27,12 +27,14 @@ export default defineConfig({
 					// and a desktop browser answers some touch gestures itself: on
 					// a page that cannot scroll, a horizontal drag can be read as
 					// back/forward navigation and a downward one as
-					// pull-to-refresh, on some platforms even against
-					// overscroll-behavior: none. The app disables those actions
-					// the way a page can; these flags disable the browser's own
-					// share of them, so the suite measures the app and not the
-					// host's gesture chrome.
-					args: ['--overscroll-history-navigation=0', '--disable-pull-to-refresh-effect']
+					// pull-to-refresh. The app refuses those gestures the way a
+					// page can (touch-action: none on the surface); these flags
+					// turn off the browser's own share, so the suite measures the
+					// app and not the host's gesture chrome.
+					args: [
+						'--disable-features=OverscrollHistoryNavigation,TouchpadOverscrollHistoryNavigation',
+						'--disable-pull-to-refresh-effect'
+					]
 				}
 			}
 		}
