@@ -16,7 +16,7 @@ export const CANVAS = 1024;
 // the renderer would have picked, so a picture drawn on a transparent ground
 // cannot quietly become a card with a different background from its
 // neighbours.
-export const BACKGROUND = '0xF2F7F1';
+export const BACKGROUND = '0xFFFFFF';
 
 // Generators rarely return an exactly square image. A couple of percent
 // disappears once the card is drawn; more than that would visibly stretch the

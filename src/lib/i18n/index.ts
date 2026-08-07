@@ -18,7 +18,7 @@ export type Lang = (typeof langs)[number];
 // read on the page they are standing on. Keyed by Lang, so a language
 // added to the list above does not compile until it has a name here.
 export const langNames: Record<Lang, string> = {
-	pl: 'polski',
+	pl: 'Polski',
 	en: 'English'
 };
 

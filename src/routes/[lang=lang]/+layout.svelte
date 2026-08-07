@@ -20,10 +20,6 @@
 	// language back in front of what is left names the same page there.
 	const path = $derived(page.url.pathname.slice(lang.length + 1).replace(/\/$/, ''));
 	const onLanding = $derived(path === '');
-
-	// Every language but the one being read, which is one link while there
-	// are two languages and stays correct if there are ever more.
-	const others = $derived(langs.filter((one) => one !== lang));
 </script>
 
 <svelte:head>
@@ -39,6 +35,27 @@
 	<!-- The root belongs to no language: it reads the browser's and forwards. -->
 	<link rel="alternate" hreflang="x-default" href="/" />
 </svelte:head>
+
+{#snippet flag(of: string)}
+	<!--
+		Drawn rather than typed: an emoji flag is a pair of letters on some
+		platforms, and a language pill that reads "PL" on one machine and
+		flies a flag on another is two designs. Each language names its flag
+		here; a new language will not compile without one.
+	-->
+	<svg class="flag" viewBox="0 0 20 14" aria-hidden="true" focusable="false">
+		{#if of === 'pl'}
+			<rect width="20" height="7" fill="#fff" />
+			<rect y="7" width="20" height="7" fill="#dc143c" />
+		{:else}
+			<rect width="20" height="14" fill="#012169" />
+			<path d="M0 0 20 14M20 0 0 14" stroke="#fff" stroke-width="2.8" />
+			<path d="M0 0 20 14M20 0 0 14" stroke="#c8102e" stroke-width="1.2" />
+			<path d="M10 0V14M0 7H20" stroke="#fff" stroke-width="4.6" />
+			<path d="M10 0V14M0 7H20" stroke="#c8102e" stroke-width="2.8" />
+		{/if}
+	</svg>
+{/snippet}
 
 <!--
 	The document declares Polish, so a page in the other language names its
@@ -57,13 +74,39 @@
 			<a class="wordmark" href="/{lang}">Mowlak</a>
 		{/if}
 
-		{#each others as alternate (alternate)}
-			<!-- The same page in the other language, which is the partner the
-			     hreflang links in the head already name. -->
-			<a class="switch" href="/{alternate}{path}" lang={alternate} hreflang={alternate}>
-				{langNames[alternate]}
-			</a>
-		{/each}
+		<!--
+			The language, worn as a flag on a small pill that opens to the
+			others. A details element rather than a script: it opens, closes
+			and answers the keyboard on its own, and choosing an entry is a
+			plain navigation to the same page in that language — the partner
+			the hreflang links in the head already name.
+		-->
+		<details class="languages">
+			<summary aria-label={langNames[lang]}>
+				{@render flag(lang)}
+				<svg class="drop" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+					<path d="M6.5 9.5 12 15 17.5 9.5" />
+				</svg>
+			</summary>
+			<ul class="menu">
+				<!-- Every language, the current one marked: a menu of one entry
+				     reads as something missing, and seeing where you are is
+				     half of choosing where to go. -->
+				{#each langs as option (option)}
+					<li>
+						<a
+							href="/{option}{path}"
+							lang={option}
+							hreflang={option}
+							aria-current={option === lang ? 'page' : undefined}
+						>
+							{@render flag(option)}
+							{langNames[option]}
+						</a>
+					</li>
+				{/each}
+			</ul>
+		</details>
 	</header>
 
 	<main>
@@ -147,8 +190,8 @@
 		min-height: 100dvh;
 		background-color: var(--paper);
 		background-image:
-			radial-gradient(60rem 45rem at 78% 6rem, rgb(233 138 95 / 10%), transparent 70%),
-			radial-gradient(50rem 40rem at 8% 92%, rgb(38 63 54 / 6%), transparent 70%);
+			radial-gradient(60rem 45rem at 78% 6rem, rgb(233 138 95 / 17%), transparent 70%),
+			radial-gradient(50rem 40rem at 8% 92%, rgb(38 63 54 / 10%), transparent 70%);
 		background-repeat: no-repeat;
 		color: var(--ink);
 		font-family: 'Nunito Variable', system-ui, sans-serif;
@@ -189,23 +232,116 @@
 		text-decoration: none;
 	}
 
-	.masthead .wordmark,
-	.switch {
+	.masthead .wordmark {
 		display: inline-flex;
 		align-items: center;
 		/* A row this slim still has to be hittable with a thumb. */
 		min-height: 44px;
 	}
 
-	/*
-		Quiet by size rather than by colour: the accent and the quiet ink both
-		fall short of AA against this ground at text sizes, and a link is
-		text.
-	*/
-	.switch {
+	/* The pill sits at the row's end and anchors its own menu. */
+	.languages {
+		position: relative;
 		margin-left: auto;
-		font-size: 0.95rem;
+	}
+
+	.languages summary {
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
+		/* A hair more on the left: the chevron's glyph sits inset in its own
+		   box, and equal padding reads as more air on the right. */
+		padding: 0.3rem 0.55rem 0.3rem 0.65rem;
+		border: 1px solid var(--faint-ink);
+		border-radius: 999px;
+		background: var(--card);
+		cursor: pointer;
+		gap: 0.35rem;
+		list-style: none;
+		transition: border-color 140ms ease;
+	}
+
+	.languages summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.languages summary:hover {
+		border-color: var(--quiet-ink);
+	}
+
+	/*
+		The browser draws its own ring around a clicked summary in some
+		houses, outside the pill, which pushes the pill's apparent edge past
+		the menu's and makes an aligned dropdown read as a crooked one. The
+		ring is ours: none for a pointer that can see what it pressed, a
+		tight ink one for the keyboard.
+	*/
+	.languages summary:focus {
+		outline: none;
+	}
+
+	.languages summary:focus-visible {
+		outline: 2px solid var(--ink);
+		outline-offset: 2px;
+	}
+
+	.languages[open] summary .drop {
+		transform: rotate(180deg);
+	}
+
+	.flag {
+		width: 1.3rem;
+		height: 0.91rem;
+		border-radius: 3px;
+		/* The white half of one flag needs an edge on a white pill. */
+		outline: 1px solid var(--faint-ink);
+		outline-offset: 0;
+	}
+
+	.drop {
+		width: 1rem;
+		height: 1rem;
+		fill: none;
+		stroke: var(--ink);
+		stroke-width: 2;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		transition: transform 140ms ease;
+	}
+
+	.menu {
+		position: absolute;
+		top: calc(100% + 0.25rem);
+		right: 0;
+		z-index: 1;
+		min-width: 8.5rem;
+		margin: 0;
+		padding: 0.3rem;
+		border-radius: 0.85rem;
+		background: var(--card);
+		box-shadow: var(--lift);
+		list-style: none;
+	}
+
+	.menu a {
+		display: flex;
+		align-items: center;
+		min-height: 44px;
+		padding: 0.35rem 0.7rem;
+		border-radius: 0.55rem;
+		gap: 0.6rem;
+		font-size: 1rem;
 		font-weight: 600;
+		text-decoration: none;
+	}
+
+	.menu a:hover {
+		background: var(--paper);
+	}
+
+	/* Where the reader already is, marked the way a chosen thing is. */
+	.menu a[aria-current] {
+		background: rgb(38 63 54 / 8%);
 	}
 
 	main {

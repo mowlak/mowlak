@@ -186,7 +186,14 @@
 		display: grid;
 		height: 100dvh;
 		overflow: hidden;
-		background: var(--paper);
+		background-color: var(--paper);
+		/* The same two washes the site wears, worn more quietly: this is the
+		   child's screen, and nothing here may compete with the picture. The
+		   gradient is static - warmth, not an event. */
+		background-image:
+			radial-gradient(48rem 36rem at 82% -4rem, rgb(233 138 95 / 10%), transparent 70%),
+			radial-gradient(44rem 34rem at 6% 104%, rgb(38 63 54 / 7%), transparent 70%);
+		background-repeat: no-repeat;
 		overscroll-behavior: none;
 		grid-template-rows: 1fr auto;
 		/* None rather than manipulation: manipulation still lets a drag start
@@ -217,16 +224,23 @@
 		display: block;
 		width: min(74vw, 62dvh);
 		aspect-ratio: 1 / 1;
+		/* The picture stands on a white card, so where a picture ends is a
+		   designed edge and not a seam against the washed ground. */
+		padding: 6%;
+		border-radius: 2rem;
+		background: #fff;
+		box-shadow: 0 10px 30px rgb(38 63 54 / 10%);
 	}
 
 	/* Stacked rather than sequential, so one card fades into the next in
 	   place instead of the screen emptying between them. */
 	.art {
 		position: absolute;
-		inset: 0;
-		width: 100%;
-		height: 100%;
+		inset: 7%;
+		width: 86%;
+		height: 86%;
 		object-fit: contain;
+		border-radius: 1.25rem;
 	}
 
 	.footer {

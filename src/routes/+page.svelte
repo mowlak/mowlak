@@ -1,7 +1,9 @@
 <script lang="ts">
 	// The root chooses the reader's language before first paint and sends
 	// them to it; the links below are the no-JS fallback and the crawl
-	// entry for the prerenderer.
+	// entry for the prerenderer. Their names come from the same table every
+	// other surface reads, so a new language appears here by itself.
+	import { langNames, langs } from '$lib/i18n';
 </script>
 
 <svelte:head>
@@ -15,6 +17,7 @@
 </svelte:head>
 
 <nav>
-	<a href="/pl">polski</a>
-	<a href="/en">English</a>
+	{#each langs as lang (lang)}
+		<a href="/{lang}" hreflang={lang}>{langNames[lang]}</a>
+	{/each}
 </nav>

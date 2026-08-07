@@ -26,7 +26,7 @@ const PACKS = fileURLToPath(new URL('../content/packs', import.meta.url));
 const FFMPEG = process.env.FFMPEG ?? 'ffmpeg';
 
 const SIZE = 512;
-const BACKGROUND = '#f2f7f1';
+const BACKGROUND = '#ffffff';
 const INK = '#59503f';
 
 const SECONDS = 1.5;
