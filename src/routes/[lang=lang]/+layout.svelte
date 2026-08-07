@@ -285,10 +285,6 @@
 		outline-offset: 2px;
 	}
 
-	.languages[open] summary .drop {
-		transform: rotate(180deg);
-	}
-
 	.flag {
 		width: 1.3rem;
 		height: 0.91rem;
@@ -307,6 +303,10 @@
 		stroke-linecap: round;
 		stroke-linejoin: round;
 		transition: transform 140ms ease;
+	}
+
+	.languages[open] summary .drop {
+		transform: rotate(180deg);
 	}
 
 	.menu {
@@ -333,15 +333,6 @@
 		font-size: 1rem;
 		font-weight: 600;
 		text-decoration: none;
-	}
-
-	.menu a:hover {
-		background: var(--paper);
-	}
-
-	/* Where the reader already is, marked the way a chosen thing is. */
-	.menu a[aria-current] {
-		background: rgb(38 63 54 / 8%);
 	}
 
 	main {
@@ -386,6 +377,18 @@
 
 	.links a:hover {
 		text-decoration-color: currentcolor;
+	}
+
+	/* The menu rows' states live here, after every plainer link rule: the
+	   selector order is read strictly, and a state may not be outranked by
+	   what follows it. */
+	.menu a:hover {
+		background: var(--paper);
+	}
+
+	/* Where the reader already is, marked the way a chosen thing is. */
+	.menu a[aria-current] {
+		background: rgb(38 63 54 / 8%);
 	}
 
 	/*
