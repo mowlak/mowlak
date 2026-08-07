@@ -60,7 +60,7 @@
 		margin: 0;
 		/* Written out rather than read from the property below: this rule
 		   reaches outside the page, where the property is not defined. */
-		background: #f6efe3;
+		background: #f2f7f1;
 	}
 
 	/*
@@ -83,10 +83,13 @@
 		marks, because this page is prose and prose is read.
 	*/
 	.site {
-		--paper: #f6efe3;
-		--ink: #3b342a;
-		--quiet-ink: #6b6252;
-		--faint-ink: rgb(59 52 42 / 15%);
+		--paper: #f2f7f1;
+		--ink: #263f36;
+		--quiet-ink: #5d7a6e;
+		--faint-ink: rgb(38 63 54 / 15%);
+		/* The one warm note in a cool palette; spent only where the page
+		   asks for the single action it offers. */
+		--accent: #e98a5f;
 
 		min-height: 100dvh;
 		padding: 0 1.25rem;

@@ -163,10 +163,10 @@
 <style>
 	:global(:root) {
 		/* One warm ground for the whole app. Nothing here blinks. */
-		--paper: #f6efe3;
-		--ink: #59503f;
-		--quiet-ink: rgb(89 80 63 / 42%);
-		--faint-ink: rgb(89 80 63 / 18%);
+		--paper: #f2f7f1;
+		--ink: #2f4f44;
+		--quiet-ink: rgb(47 79 68 / 45%);
+		--faint-ink: rgb(47 79 68 / 18%);
 	}
 
 	/* The app is one screen and stays one screen: there is nothing below the

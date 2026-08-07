@@ -75,7 +75,7 @@
 		inset: 0;
 		display: grid;
 		padding: 1.5rem;
-		background: rgb(35 31 24 / 45%);
+		background: rgb(24 40 34 / 45%);
 		place-items: center;
 	}
 
@@ -84,7 +84,7 @@
 		width: min(22rem, 100%);
 		padding: 1.5rem;
 		border-radius: 1rem;
-		background: #fffaf2;
+		background: #fbfdfa;
 		color: var(--ink);
 		font-family: system-ui, sans-serif;
 		gap: 1.25rem;

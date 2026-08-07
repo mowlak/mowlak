@@ -23,7 +23,7 @@
 	     is a web page and is not installable. -->
 	<link rel="manifest" href="/manifest.webmanifest" />
 	<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-	<meta name="theme-color" content="#f6efe3" />
+	<meta name="theme-color" content="#f2f7f1" />
 	<!-- iOS reads none of the manifest, so the same few facts are repeated
 	     for it: standalone, and named. -->
 	<meta name="mobile-web-app-capable" content="yes" />

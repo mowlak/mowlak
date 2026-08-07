@@ -72,9 +72,11 @@
 	.cta a {
 		display: inline-block;
 		padding: 0.75rem 1.6rem;
-		border: 1px solid var(--ink);
+		border: 1px solid transparent;
 		border-radius: 999px;
+		background: var(--accent);
 		font-size: 1.1rem;
+		font-weight: 600;
 		text-decoration: none;
 	}
 

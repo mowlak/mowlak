@@ -125,7 +125,7 @@ not like.
 
 > Flat vector children's illustration of a single [ANIMAL], centered, thick
 > clean outlines, simple geometric shapes, 3–5 warm colors, plain solid
-> light-cream background (#FAF3E7), no scenery, no text, no gradients, no
+> pale mint-white background (#F2F7F1), no scenery, no text, no gradients, no
 > shadows, calm friendly expression. Square image.
 
 The twelve animals of the first pack, in the order they appear in it:

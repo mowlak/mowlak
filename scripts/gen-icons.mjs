@@ -17,7 +17,7 @@ import { chromium } from '@playwright/test';
 const STATIC = fileURLToPath(new URL('../static', import.meta.url));
 
 /** The mark's own ground, painted behind it wherever it must be opaque. */
-const GROUND = '#59503f';
+const GROUND = '#e98a5f';
 
 /**
  * A maskable icon is cropped to whatever shape the platform prefers, and
