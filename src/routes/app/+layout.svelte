@@ -22,7 +22,6 @@
 	<!-- The manifest describes the app and only the app; the site around it
 	     is a web page and is not installable. -->
 	<link rel="manifest" href="/manifest.webmanifest" />
-	<link rel="icon" href="/icon.svg" type="image/svg+xml" />
 	<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 	<meta name="theme-color" content="#f6efe3" />
 	<!-- iOS reads none of the manifest, so the same few facts are repeated
