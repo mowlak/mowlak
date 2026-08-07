@@ -18,3 +18,13 @@ npm run dev
 ```
 
 `npm run build` produces the static site; `npm run check` type-checks.
+
+## Licensing
+
+- **Code**: [AGPL-3.0-only](LICENSE).
+- **Content packs** (word lists, images, audio): [CC BY-NC-SA
+  4.0](content/LICENSE) as compilations, with an additional permission
+  for individual use in professional speech-therapy practice and
+  classrooms — see [content/README.md](content/README.md).
+- The **Mowlak name and logo** are excluded from both licenses and may
+  not be used to identify derivative products.
