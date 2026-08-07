@@ -4,8 +4,11 @@ test('the Polish landing page introduces the product and opens the app', async (
 	await page.goto('/pl');
 
 	await expect(page.getByRole('heading', { level: 1, name: 'Mowlak' })).toBeVisible();
+	await expect(page.getByText('Od niemowlaka do mowlaka.')).toBeVisible();
 	await expect(
-		page.getByText('Spokojna aplikacja do nauki mówienia dla najmłodszych.')
+		page.getByText(
+			'Spokojna aplikacja do nauki mówienia dla najmłodszych. Dziecko dotyka obrazka, ciepły głos mówi „hau hau” — a kiedy przyjdzie pora, także „pies”. Bez reklam, bez nagród, bez pośpiechu. Za darmo, na zawsze.'
+		)
 	).toBeVisible();
 	await expect(page.getByRole('link', { name: 'Otwórz aplikację' })).toHaveAttribute(
 		'href',
@@ -17,8 +20,67 @@ test('the English landing page introduces the product and opens the app', async 
 	await page.goto('/en');
 
 	await expect(page.getByRole('heading', { level: 1, name: 'Mowlak' })).toBeVisible();
-	await expect(page.getByText('A calm speech-learning app for toddlers.')).toBeVisible();
+	await expect(page.getByText('First words, at a calm pace.')).toBeVisible();
+	await expect(
+		page.getByText(
+			'A calm speech-learning app for toddlers. Your child touches a picture, a warm voice says "hau hau" — and when the time comes, the word. No ads, no rewards, no rush. Free, forever.'
+		)
+	).toBeVisible();
 	await expect(page.getByRole('link', { name: 'Open the app' })).toHaveAttribute('href', '/app/en');
+});
+
+// The page argues for doing less, so the four promises it makes are the
+// argument. Losing one silently would leave the section still reading like
+// a complete thought.
+test('the landing keeps all four promises on the page', async ({ page }) => {
+	await page.goto('/en');
+
+	const pledges = page.getByRole('listitem');
+	await expect(pledges).toHaveCount(4);
+	await expect(pledges.first()).toHaveText(
+		'One thing on screen. — Nothing blinks, nothing pops up, there is nothing to scroll.'
+	);
+});
+
+// The interface is bilingual and the cards are not. A reader who arrived in
+// English would otherwise find that out from the first card.
+test('only the English landing says which language the cards teach', async ({ page }) => {
+	await page.goto('/en');
+	await expect(page.getByText('Mowlak teaches Polish first words.')).toBeVisible();
+
+	await page.goto('/pl');
+	await expect(page.getByText('Mowlak teaches Polish first words.')).toHaveCount(0);
+});
+
+test('each landing page names itself and its other language', async ({ page }) => {
+	await page.goto('/pl');
+
+	await expect(page).toHaveTitle('Mowlak — nauka mówienia dla najmłodszych');
+	await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+		'content',
+		'Spokojna aplikacja do nauki mówienia dla najmłodszych. Bez reklam, bez nagród, bez pośpiechu. Za darmo, na zawsze.'
+	);
+	await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', '/pl');
+	await expect(page.locator('link[hreflang="pl"]')).toHaveAttribute('href', '/pl');
+	await expect(page.locator('link[hreflang="en"]')).toHaveAttribute('href', '/en');
+	// The root has no language of its own, which is exactly what x-default
+	// is for: it reads the browser's and forwards.
+	await expect(page.locator('link[hreflang="x-default"]')).toHaveAttribute('href', '/');
+
+	await page.goto('/en');
+
+	await expect(page).toHaveTitle('Mowlak — a calm speech-learning app for toddlers');
+	await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', '/en');
+	await expect(page.locator('link[hreflang="pl"]')).toHaveAttribute('href', '/pl');
+});
+
+test('the landing links to the source it promises is open', async ({ page }) => {
+	await page.goto('/pl');
+
+	await expect(page.getByRole('link', { name: 'Kod źródłowy' })).toHaveAttribute(
+		'href',
+		'https://github.com/mowlak/mowlak'
+	);
 });
 
 // The root redirects before first paint, which makes asserting the landing

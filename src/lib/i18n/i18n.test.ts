@@ -44,14 +44,34 @@ describe.each([
 	['pl', pl],
 	['en', en]
 ])('the %s string table', (_name, table) => {
-	it('says something at every leaf', () => {
+	it('says something at every leaf, or nothing on purpose', () => {
 		const entries = leaves(table);
 		expect(entries.length).toBeGreaterThan(0);
 
 		for (const [path, value] of entries) {
+			// null is the one way a language may stay silent: a sentence that
+			// only one language needs. It is spelt out in the table, so the
+			// silence is a decision rather than an oversight.
+			if (value === null) continue;
+
 			expect(value, path).toBeTypeOf('string');
 			expect((value as string).trim(), path).not.toBe('');
 		}
+	});
+});
+
+// The entries above are few enough to name, and naming them keeps the
+// exception from spreading: a null that appears anywhere else fails the
+// walk, and a null that appears here in English fails this.
+describe('the sentences one language does not need', () => {
+	it('leaves Polish silent about the content language and the name', () => {
+		expect(pl.landing.note).toBeNull();
+		expect(pl.landing.name).toBeNull();
+	});
+
+	it('has English say both', () => {
+		expect(en.landing.note).toBeTypeOf('string');
+		expect(en.landing.name).not.toBeNull();
 	});
 });
 

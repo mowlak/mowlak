@@ -1,8 +1,8 @@
 import { en } from './en';
 import { pl } from './pl';
-import type { Strings } from './types';
+import type { Pledge, Section, Strings } from './types';
 
-export type { Strings };
+export type { Pledge, Section, Strings };
 
 // The interface languages the site ships. Everything else derives from
 // this list — the type below, the route matcher in src/params/lang.ts and

@@ -16,9 +16,20 @@ test('a full visit never leaves the origin', async ({ page, baseURL }) => {
 
 	await page.goto('/');
 	await page.waitForURL('**/pl');
+	await page.getByRole('link', { name: 'Prywatność' }).click();
+	await page.waitForURL('**/pl/privacy');
+	await page.getByRole('link', { name: 'Mowlak' }).click();
+	await page.waitForURL('**/pl');
 	await page.getByRole('link', { name: 'Otwórz aplikację' }).click();
 	await page.waitForURL('**/app/pl');
 	await expect(surface(page)).toHaveAttribute('data-state', 'idle');
+
+	// The English pages are the same documents in another language, and have
+	// the same nothing to fetch.
+	await page.goto('/en');
+	await page.getByRole('link', { name: 'Privacy' }).click();
+	await page.waitForURL('**/en/privacy');
+	await expect(page.getByRole('heading', { level: 1, name: 'Privacy' })).toBeVisible();
 
 	// Guards the guard: an empty list would pass the assertion below while
 	// proving nothing.

@@ -6,14 +6,76 @@
 // because a half-translated screen in front of a child is worse than a
 // build that refuses to finish.
 //
+// A few sentences are worth saying in one language and not in another. The
+// key is required all the same and the language that does not need it says
+// `null`, so staying silent is a decision on the record rather than a
+// missing entry nobody noticed.
+//
+// The tables hold prose and never markup: nothing here is parsed, and a
+// page that wants emphasis puts the tag in its own template.
+//
 // Only the teaching-content-free interface lives here. Cards, words and
 // onomatopoeia are Polish and belong to the content packs.
+
+/** One promise the landing makes, and the plain sentence that backs it. */
+export interface Pledge {
+	claim: string;
+	detail: string;
+}
+
+/** A heading with one paragraph under it. */
+export interface Section {
+	heading: string;
+	body: string;
+}
+
 export interface Strings {
+	// The chrome under every public page.
+	footer: {
+		privacy: string;
+		source: string;
+	};
 	landing: {
-		// One sentence under the product name: what the app is for.
+		// The browser tab and the search result, in that order.
+		title: string;
+		description: string;
+		// The line under the name.
+		tagline: string;
+		// One paragraph under the name: what the app is for.
 		lede: string;
+		// Which language the cards teach. Only a reader who arrived in
+		// English has reason to wonder, so only English answers.
+		note: string | null;
 		// The single call to action; also the accessible name of the link.
 		open: string;
+		// Why the app does so little, and the four promises that follow from
+		// it. Exactly four, in reading order: a tuple, so a language that
+		// drops one does not compile.
+		calm: {
+			heading: string;
+			intro: string;
+			pledges: readonly [Pledge, Pledge, Pledge, Pledge];
+		};
+		// The method, in a paragraph a parent can read while a child waits.
+		how: Section;
+		// What the name means. Polish readers know, so Polish says nothing.
+		name: Section | null;
+		// How to sit down with it, and where the settings hide.
+		parents: Section;
+		// What the project costs and why.
+		free: Section;
+	};
+	// The privacy page, which exists to say that there is nothing to say.
+	privacy: {
+		title: string;
+		description: string;
+		heading: string;
+		lede: string;
+		// The four things the app does not do, and the one it does.
+		points: readonly [string, string, string, string];
+		outro: string;
+		// When the page was last true.
+		stamp: string;
 	};
 	app: {
 		// The card screen is wordless: a child of one and a half cannot read,
