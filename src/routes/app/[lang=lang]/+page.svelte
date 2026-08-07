@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import { langFromParam, t } from '$lib/i18n';
 
-	const lang = $derived(page.params.lang as 'pl' | 'en');
+	const strings = $derived(t(langFromParam(page.params.lang)));
 </script>
 
 <svelte:head>
@@ -10,5 +11,5 @@
 
 <main>
 	<h1>Mowlak</h1>
-	<p>{lang === 'pl' ? 'Wkrótce.' : 'Coming soon.'}</p>
+	<p>{strings.app.comingSoon}</p>
 </main>

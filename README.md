@@ -23,6 +23,14 @@ rewrites the tree to match. `npm test` runs the unit tests and then the
 browser tests, which build the static site and drive the result, so they
 exercise what actually ships rather than a development server.
 
+## Interface languages
+
+Interface strings live in `src/lib/i18n`: one `Strings` interface and one
+table per language, both declaring it. Adding a string means adding it to
+every table, because a missing translation fails the type check rather
+than falling back to another language at runtime. Teaching content is not
+part of this layer.
+
 ## Licensing
 
 - **Code**: [AGPL-3.0-only](LICENSE).
