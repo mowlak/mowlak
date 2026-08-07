@@ -352,24 +352,40 @@ export function rawFormat(format) {
  * guess at the parts it has not heard yet, which is audible on clips this
  * short.
  *
- * @param {string} raw the file the speech service returned
- * @param {string} format the configured output_format
+ * How the source is described to ffmpeg is the parameter, because that is the
+ * only thing that differs between a take the speech service returned — raw
+ * samples with no header, which have to be described — and a recording made at
+ * home, which is a file ffmpeg reads for itself. Everything after the input is
+ * identical for both, and identical is the whole point: clips that arrive by
+ * different routes still go through one trim, one measurement, one loudness.
+ *
+ * @param {string[]} input what the source is, for ffmpeg; empty when the file says so itself
+ * @param {string} source the file to measure
  * @returns {string[]}
  */
-export function measureArgs(raw, format) {
+export function measurePass(input, source) {
 	return [
 		'-hide_banner',
 		'-nostdin',
 		'-y',
-		...rawFormat(format).args,
+		...input,
 		'-i',
-		raw,
+		source,
 		'-af',
 		`${trim()},${target()}:print_format=json`,
 		'-f',
 		'null',
 		'-'
 	];
+}
+
+/**
+ * @param {string} raw the file the speech service returned
+ * @param {string} format the configured output_format
+ * @returns {string[]}
+ */
+export function measureArgs(raw, format) {
+	return measurePass(rawFormat(format).args, raw);
 }
 
 /**
@@ -388,13 +404,13 @@ export function measureArgs(raw, format) {
  * way out; the output format is stated explicitly so the file can be written
  * under a temporary name and still be an m4a.
  *
- * @param {string} raw
+ * @param {string[]} input what the source is, for ffmpeg; empty when the file says so itself
+ * @param {string} source
  * @param {string} out
- * @param {string} format
  * @param {Measured} measured
  * @returns {string[]}
  */
-export function encodeArgs(raw, out, format, measured) {
+export function encodePass(input, source, out, measured) {
 	const normalise =
 		`${target()}:measured_I=${measured.input_i}:measured_TP=${measured.input_tp}` +
 		`:measured_LRA=${measured.input_lra}:measured_thresh=${measured.input_thresh}` +
@@ -404,9 +420,9 @@ export function encodeArgs(raw, out, format, measured) {
 		'-hide_banner',
 		'-nostdin',
 		'-y',
-		...rawFormat(format).args,
+		...input,
 		'-i',
-		raw,
+		source,
 		'-af',
 		`${trim()},${normalise}`,
 		'-ar',
@@ -429,6 +445,17 @@ export function encodeArgs(raw, out, format, measured) {
 		'ipod',
 		out
 	];
+}
+
+/**
+ * @param {string} raw
+ * @param {string} out
+ * @param {string} format
+ * @param {Measured} measured
+ * @returns {string[]}
+ */
+export function encodeArgs(raw, out, format, measured) {
+	return encodePass(rawFormat(format).args, raw, out, measured);
 }
 
 const MEASURED_KEYS = ['input_i', 'input_tp', 'input_lra', 'input_thresh', 'target_offset'];

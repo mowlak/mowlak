@@ -1,9 +1,15 @@
 # Asset pipeline
 
-Two scripts turn a finished word list into the media a pack ships:
-`generate-audio.mjs` records it, `import-images.mjs` brings the pictures in.
-Both are run by hand, rarely, by one person; neither runs in CI and neither is
-called by the build.
+Three scripts turn a finished word list into the media a pack ships:
+`generate-audio.mjs` has a speech service read it, `import-recordings.mjs`
+brings in a voice recorded at home, and `import-images.mjs` brings the pictures
+in. All three are run by hand, rarely, by one person; none runs in CI and none
+is called by the build.
+
+The two audio paths are alternatives, not stages. A pack can be voiced either
+way, and what reaches a card is the same either way: the same trim, the same
+loudness target, the same encoding. What must never happen is a pack voiced
+both ways at once.
 
 ## What the pipeline is for
 
@@ -11,8 +17,9 @@ A card is a picture, an onomatopoeia and a word, and the child meets a dozen
 of them in a row. That is why the constants below are not settings:
 
 - **One voice.** A child who hears two speakers hears two different things
-  being asked. The voice is chosen once, in an audition, and pinned in
-  `audio.config.json`.
+  being asked. Either the voice is chosen once, in an audition, and pinned in
+  `audio.config.json`, or one person records the whole pack in one sitting.
+  Never half of each.
 - **One loudness.** Every clip is measured and normalised to the same target
   (I −18 LUFS, TP −2 dBTP, LRA 7). A clip that arrives louder than the one
   before it is a jump scare.
@@ -23,13 +30,15 @@ of them in a row. That is why the constants below are not settings:
 
 And one rule about this repository: **raw material stays outside it.** The
 takes that were not chosen and the downloads straight out of an image tool are
-not content. Both scripts refuse a raw or audition directory that is inside
+not content. Every script refuses a raw or audition directory that is inside
 the working tree.
 
 ## Requirements
 
-- `ffmpeg` and `ffprobe` on the `PATH`, or in `$FFMPEG` and `$FFPROBE`.
-- `ELEVENLABS_API_KEY`, for the audio script only. Either export it in the
+- `ffmpeg` and `ffprobe` on the `PATH`, or in `$FFMPEG` and `$FFPROBE`. This is
+  all `import-recordings.mjs` needs: it reads files that are already on the
+  disk, calls nothing and spends nothing.
+- `ELEVENLABS_API_KEY`, for `generate-audio.mjs` only. Either export it in the
   shell that runs the script, or put it in a gitignored `.env` at the root of
   the working tree:
 
@@ -37,7 +46,7 @@ the working tree.
   ELEVENLABS_API_KEY=...
   ```
 
-  Both scripts read that file at startup if it is there. A variable already
+  The script reads that file at startup if it is there. A variable already
   set in the environment wins, so a one-off run can override the file without
   editing it. The key is never written anywhere by the pipeline.
 
@@ -106,6 +115,114 @@ That changes only what is spoken. The text on the card comes from the
 logopedic canon and is never touched by this pipeline — the dry run prints
 both so the difference is visible. An override naming a card or level the pack
 does not have is an error, not a no-op.
+
+## Recording at home
+
+The other way to voice a pack: one person, one microphone, one sitting. The
+recordings are made outside this repository and imported through the same trim,
+the same loudness target and the same encoding a generated clip goes through,
+so a home-recorded pack and a generated one differ in nothing but the voice.
+
+Set aside about half an hour. Twenty-four clips is twenty minutes of recording
+and a few minutes of exporting.
+
+### 1. Set up
+
+A quiet room: no fan, no fridge, no open window. Soft furnishings help more
+than equipment does — a room with curtains, a rug and a sofa in it will beat a
+bare one with a better microphone.
+
+A cardioid condenser about 15–20 cm away, with a pop filter, or aimed slightly
+off-axis if there is none — `p` in `pi pi` and `hau` will thump the diaphragm
+otherwise. Record at whatever sample rate and depth the recorder offers and
+export to `wav`; nothing needs adjusting beforehand.
+
+Set the level once and leave it. Do not normalise, compress or de-noise by
+hand: every clip is measured and normalised on import, and a clip that was
+levelled twice is a clip levelled differently from the one beside it.
+
+### 2. Record
+
+**Everything in one session, in one room, in one voice.** A child who hears two
+speakers hears two different things being asked. That is also why a later fix
+means going back to the same room and the same setup, not recording the one
+missing card wherever you happen to be.
+
+Level 1 of a card is the onomatopoeia and level 2 is the word, both spoken.
+Level 1 is never an animal sound effect — the child is being invited to imitate
+speech, so speech is what is recorded.
+
+How to say it: playfully, but unhurried. Warm and a little slower than
+conversation, with the ordinary intonation the sound has when you point at a
+dog with a two-year-old. Not a character voice, not a performance, no rising
+excitement at the end — the clip is an invitation to repeat something, and a
+child repeats what sounds repeatable. Level 2 is the same voice saying one
+word, plainly.
+
+Two or three takes of each clip, one after another, then move on. Leave a
+moment of silence around each take; it is trimmed off on import.
+
+### 3. Export
+
+One file per clip, named after the clip, in a directory outside this
+repository:
+
+```sh
+mkdir -p ~/mowlak-takes
+```
+
+The name is the whole contract — `<card-id>.<kind>.wav`, the kind being `sound`
+for level 1 and `word` for level 2. The 24 files the animals pack expects, in
+its order:
+
+```
+dog.sound.wav      dog.word.wav
+cat.sound.wav      cat.word.wav
+cow.sound.wav      cow.word.wav
+horse.sound.wav    horse.word.wav
+duck.sound.wav     duck.word.wav
+hen.sound.wav      hen.word.wav
+rooster.sound.wav  rooster.word.wav
+pig.sound.wav      pig.word.wav
+sheep.sound.wav    sheep.word.wav
+goat.sound.wav     goat.word.wav
+frog.sound.wav     frog.word.wav
+mouse.sound.wav    mouse.word.wav
+```
+
+`aiff`, `flac`, `m4a` and `mp3` are read too, but prefer `wav`: nothing has
+encoded the take before the normalisation hears it. Keep the takes you did not
+choose in a subdirectory — the importer looks only at files sitting directly in
+the directory, and refuses a file it cannot place rather than skipping it
+quietly.
+
+### 4. Import
+
+```sh
+node scripts/assets/import-recordings.mjs --raw-dir ~/mowlak-takes --dry-run
+node scripts/assets/import-recordings.mjs --raw-dir ~/mowlak-takes
+```
+
+The dry run prints, per clip, the file it found or the name it is waiting for.
+The real run trims, measures, normalises and encodes each one to the `m4a` the
+card already names, writing under a temporary name and renaming only when
+ffmpeg has finished, so an interrupted run never leaves a half-written clip
+where a card points. A take that fails is reported by name and the rest
+continue. The content validator runs at the end.
+
+Importing part of a pack is fine and is how one flubbed take is redone —
+`--only <card-id>` narrows a run to one card. Every run then says how many of
+the pack's clips came out of these recordings and how many were left as they
+were, because a pack ships in one voice or it does not ship: a clip left behind
+is still in whatever voice it was recorded in before.
+
+### 5. Listen, then check
+
+Play the pack through on a phone speaker, which is where the app is used, then:
+
+```sh
+npm run validate
+```
 
 ## Images
 
@@ -187,7 +304,7 @@ at once, before anything is written.
 
 ## Flags
 
-Both scripts take `--help`, and `--pack <file>` for a pack other than
+All three scripts take `--help`, and `--pack <file>` for a pack other than
 `content/packs/pl/animals.json`.
 
 | `generate-audio.mjs`    |                                                        |
@@ -199,6 +316,12 @@ Both scripts take `--help`, and `--pack <file>` for a pack other than
 | `--paid-tier-confirmed` | required before any request is sent                    |
 | `--keep-raw <dir>`      | keep what the service returned, outside the repo       |
 | `--config <file>`       | a config other than `scripts/assets/audio.config.json` |
+
+| `import-recordings.mjs` |                                                  |
+| ----------------------- | ------------------------------------------------ |
+| `--raw-dir <dir>`       | the recordings to import, outside the repository |
+| `--only <card-id>`      | import one card                                  |
+| `--dry-run`             | print the plan and stop; nothing is written      |
 
 | `import-images.mjs` |                                                    |
 | ------------------- | -------------------------------------------------- |
