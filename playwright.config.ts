@@ -1,7 +1,10 @@
 import { defineConfig, devices } from '@playwright/test';
 
-// Pinned so the base URL below and the preview server always agree.
-const port = 4173;
+// Pinned so the base URL below and the preview server always agree - and
+// pinned OFF vite's preview default, which every other vite project on a
+// developer's machine is also using; a suite that can be blocked by a
+// neighbour's forgotten dev server flakes for reasons no diff explains.
+const port = 4380;
 
 export default defineConfig({
 	testDir: 'tests',
