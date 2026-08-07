@@ -22,7 +22,9 @@
 <h1>{privacy.heading}</h1>
 <p class="lede">{privacy.lede}</p>
 
-<ul>
+<!-- The four things the app does not do, lifted onto one card: the whole
+     policy is a single short list and reads as one object. -->
+<ul class="points">
 	{#each privacy.points as point (point)}
 		<li>{point}</li>
 	{/each}
@@ -35,11 +37,32 @@
 	/* The landing hangs its tagline right under the name; here the sentence
 	   below the heading is the policy itself and stands apart from it. */
 	.lede {
-		margin-top: 1rem;
+		margin-top: 1.25rem;
+	}
+
+	.points {
+		margin: 2rem 0;
+		padding: 1.75rem 1.75rem 1.75rem 3rem;
+		border-radius: 1.25rem;
+		background: var(--card);
+		box-shadow: var(--lift);
+	}
+
+	.points li {
+		margin: 0 0 0.75rem;
+	}
+
+	.points li:last-child {
+		margin-bottom: 0;
+	}
+
+	/* The one warm mark on a page whose whole subject is absence. */
+	.points li::marker {
+		color: var(--accent);
 	}
 
 	.stamp {
-		margin-top: 2rem;
+		margin-top: 2.5rem;
 		color: var(--quiet-ink);
 		font-size: 0.95rem;
 	}

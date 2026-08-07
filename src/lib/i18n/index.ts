@@ -12,6 +12,16 @@ export const langs = ['pl', 'en'] as const;
 
 export type Lang = (typeof langs)[number];
 
+// What each language calls itself. A language name is never translated:
+// the header offers the other language written in that language, which is
+// the one word a reader looking for it will recognise whatever they can
+// read on the page they are standing on. Keyed by Lang, so a language
+// added to the list above does not compile until it has a name here.
+export const langNames: Record<Lang, string> = {
+	pl: 'polski',
+	en: 'English'
+};
+
 // Accepts the absent case because that is how route parameters are typed:
 // the shared page state cannot know which route is rendering, so every
 // parameter is optional to it. A missing language is as wrong as an

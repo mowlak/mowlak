@@ -43,8 +43,17 @@ const CACHE = `mowlak-${version}`;
  * the voice — and the app's own prerendered pages. The landing pages are
  * deliberately absent: they are outside the scope and would only be dead
  * weight on a device.
+ *
+ * So are the typefaces the build carries. They belong to the pages a parent
+ * reads; this screen is wordless and has not one glyph to draw with them,
+ * and the whole point of taking the app whole is that what it takes is the
+ * app.
  */
-const PRECACHE = [...build, ...files, ...prerendered.filter((path) => path.startsWith(APP))];
+const PRECACHE = [
+	...build.filter((path) => !path.endsWith('.woff2')),
+	...files,
+	...prerendered.filter((path) => path.startsWith(APP))
+];
 
 const PRECACHED = new Set(PRECACHE);
 
