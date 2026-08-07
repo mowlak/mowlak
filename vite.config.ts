@@ -26,7 +26,8 @@ export default defineConfig({
 
 	test: {
 		// Unit tests only. The browser tests under tests/ belong to
-		// Playwright, which drives the built site instead.
-		include: ['src/**/*.test.ts']
+		// Playwright, which drives the built site instead. The build scripts
+		// are plain Node and are tested as such, beside themselves.
+		include: ['src/**/*.test.ts', 'scripts/**/*.test.mjs']
 	}
 });

@@ -1,6 +1,8 @@
 node_modules/
 /.svelte-kit/
 /build/
+# Mirrored from content/packs/ by scripts/sync-content.mjs.
+/static/content/
 /playwright-report/
 /test-results/
 vite.config.ts.timestamp-*

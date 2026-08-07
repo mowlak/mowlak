@@ -19,9 +19,19 @@ npm run dev
 
 `npm run build` produces the static site; `npm run check` type-checks.
 `npm run lint` checks formatting, code and styles, and `npm run format`
-rewrites the tree to match. `npm test` runs the unit tests and then the
-browser tests, which build the static site and drive the result, so they
-exercise what actually ships rather than a development server.
+rewrites the tree to match. `npm test` validates the content, runs the unit
+tests, and then the browser tests, which build the static site and drive the
+result, so they exercise what actually ships rather than a development
+server.
+
+Teaching content is not code and does not live in `src`: the packs under
+`content/packs/` are the source of truth — one JSON file per language and
+category, beside the images and recordings it names. `npm run validate`
+checks them, and CI runs it too, so a broken pack cannot ship: every card
+names the published work its onomatopoeia comes from, every path resolves,
+and no image or recording is left unused. Development and build runs mirror
+the packs into `static/content/` first, from where the site serves them at
+`/content/`. See [content/README.md](content/README.md) for the schema.
 
 ## Interface languages
 

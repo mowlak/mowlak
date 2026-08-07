@@ -5,14 +5,17 @@
 	"license": "AGPL-3.0-only",
 	"type": "module",
 	"scripts": {
+		"predev": "node scripts/sync-content.mjs",
 		"dev": "vite dev",
+		"prebuild": "node scripts/sync-content.mjs",
 		"build": "vite build",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint . && stylelint \"src/**/*.{css,svelte}\" --allow-empty-input",
-		"test": "npm run test:unit && npm run test:e2e",
+		"validate": "node scripts/validate-content.mjs",
+		"test": "npm run validate && npm run test:unit && npm run test:e2e",
 		"test:unit": "vitest run",
 		"test:e2e": "playwright test"
 	},

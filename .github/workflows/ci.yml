@@ -27,6 +27,8 @@ jobs:
 
       - run: npm run lint
 
+      - run: npm run validate
+
       - run: npm run check
 
       - run: npm run build
