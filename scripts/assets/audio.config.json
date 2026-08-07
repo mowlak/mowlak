@@ -6,7 +6,7 @@
 		"similarity_boost": 0.75,
 		"speed": 0.95
 	},
-	"output_format": "pcm_44100",
+	"output_format": "mp3_44100_128",
 	"audition_voices": {
 		"Aleksandra": "aAY9hMI6VU335JUszdRs",
 		"Emilia": "PZA29eU9xAii8qmsl1cE",
