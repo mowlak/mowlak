@@ -33,24 +33,12 @@ jobs:
 
       - run: npm run build
 
-      # The browser binary is large and changes only when Playwright does,
-      # which the lockfile records.
-      - name: Cache the Playwright browser
-        id: playwright-cache
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-
+      # Branded Chrome, because the card player is only tested when its AAC
+      # clips actually decode and end; see playwright.config.ts. It installs
+      # as a system package rather than into ~/.cache/ms-playwright, so
+      # there is nothing here left worth caching.
       - name: Install the Playwright browser
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
-        run: npx playwright install chromium --with-deps
-
-      # The cache holds the browser but not the apt packages it links
-      # against, so those are reinstalled on every hit.
-      - name: Install the Playwright system libraries
-        if: steps.playwright-cache.outputs.cache-hit == 'true'
-        run: npx playwright install-deps chromium
+        run: npx playwright install chrome --with-deps
 
       - run: npm test
 

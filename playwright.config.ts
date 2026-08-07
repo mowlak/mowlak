@@ -11,7 +11,12 @@ export default defineConfig({
 	use: {
 		baseURL: `http://localhost:${port}`
 	},
-	projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
+	// Branded Chrome rather than the bundled Chromium: the audio lock is only
+	// really tested when a clip plays and ends for real, and the cards are
+	// AAC in an MP4 container, which a build without the licensed decoders
+	// refuses. The suite would still pass against a browser that plays
+	// nothing, and would be worth nothing.
+	projects: [{ name: 'chrome', use: { ...devices['Desktop Chrome'], channel: 'chrome' } }],
 	webServer: {
 		// The suite tests the shipped artefact, so it builds first and serves
 		// the static output rather than running the dev server. A stale

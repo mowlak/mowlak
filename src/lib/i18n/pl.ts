@@ -8,6 +8,20 @@ export const pl: Strings = {
 		open: 'Otwórz aplikację'
 	},
 	app: {
-		comingSoon: 'Wkrótce.'
+		player: {
+			picture: 'Posłuchaj',
+			advance: 'Następna karta',
+			gate: 'Ustawienia dla rodzica — przytrzymaj'
+		},
+		panel: {
+			title: 'Dla rodzica',
+			levelLegend: 'Poziom',
+			levelOnomatopoeia: 'dźwięki (hau hau)',
+			levelWord: 'słowa (pies)',
+			leave: 'Wróć na stronę',
+			close: 'Zamknij'
+		},
+		trouble: 'Nie udało się wczytać kart.',
+		retry: 'Spróbuj ponownie'
 	}
 };

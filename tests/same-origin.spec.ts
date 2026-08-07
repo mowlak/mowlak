@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { surface } from './card-surface';
 
 // The root picks a language from the browser, so the walk below only has a
 // fixed route once the browser has a fixed language.
@@ -17,7 +18,7 @@ test('a full visit never leaves the origin', async ({ page, baseURL }) => {
 	await page.waitForURL('**/pl');
 	await page.getByRole('link', { name: 'Otwórz aplikację' }).click();
 	await page.waitForURL('**/app/pl');
-	await expect(page.getByRole('heading', { level: 1, name: 'Mowlak' })).toBeVisible();
+	await expect(surface(page)).toHaveAttribute('data-state', 'idle');
 
 	// Guards the guard: an empty list would pass the assertion below while
 	// proving nothing.
