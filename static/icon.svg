@@ -1,0 +1,20 @@
+<!--
+	A stand-in mark: the app's own two colours, the ink square and the paper
+	M, and nothing a child has to interpret. It exists so an installed app
+	has a home screen icon at all; the real one is a design job.
+
+	scripts/gen-icons.mjs rasterizes this file into the PNG sizes a manifest
+	and an iOS home screen ask for, so this is the only place the drawing
+	lives.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+	<rect width="512" height="512" rx="112" fill="#59503f" />
+	<path
+		d="M128 360V152l128 148 128-148v208"
+		fill="none"
+		stroke="#f6efe3"
+		stroke-width="52"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+	/>
+</svg>
