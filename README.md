@@ -3,8 +3,8 @@
 A calm speech-learning app for toddlers and their parents. Free, no ads,
 no tracking. Polish teaching content; Polish and English interface.
 
-The name: *niemowlak* is Polish for an infant — literally "the one who
-does not yet speak". Drop the negation and a *mowlak* is the one who
+The name: _niemowlak_ is Polish for an infant — literally "the one who
+does not yet speak". Drop the negation and a _mowlak_ is the one who
 starts to.
 
 Status: early scaffold. The site is a fully static SvelteKit build —
@@ -18,6 +18,10 @@ npm run dev
 ```
 
 `npm run build` produces the static site; `npm run check` type-checks.
+`npm run lint` checks formatting, code and styles, and `npm run format`
+rewrites the tree to match. `npm test` runs the unit tests and then the
+browser tests, which build the static site and drive the result, so they
+exercise what actually ships rather than a development server.
 
 ## Licensing
 

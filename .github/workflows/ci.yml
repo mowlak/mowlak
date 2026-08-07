@@ -1,0 +1,59 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+      - '*-gate'
+  pull_request:
+
+# Needed only by the final step, which records the verdict as a ref.
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run lint
+
+      - run: npm run check
+
+      - run: npm run build
+
+      # The browser binary is large and changes only when Playwright does,
+      # which the lockfile records.
+      - name: Cache the Playwright browser
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Install the Playwright browser
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install chromium --with-deps
+
+      # The cache holds the browser but not the apt packages it links
+      # against, so those are reinstalled on every hit.
+      - name: Install the Playwright system libraries
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium
+
+      - run: npm test
+
+      # A deployment gate reads this ref: its existence is the statement
+      # that this exact commit passed every check above.
+      - name: Record the green verdict for this commit
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: git push origin "HEAD:refs/ci-green/${GITHUB_SHA}"

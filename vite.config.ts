@@ -1,6 +1,8 @@
 import adapter from '@sveltejs/adapter-static';
 import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
+// Vitest re-exports Vite's own defineConfig with the test block typed, so
+// one config file can describe both the build and the unit test run.
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
 	plugins: [
@@ -20,5 +22,11 @@ export default defineConfig({
 				register: false
 			}
 		})
-	]
+	],
+
+	test: {
+		// Unit tests only. The browser tests under tests/ belong to
+		// Playwright, which drives the built site instead.
+		include: ['src/**/*.test.ts']
+	}
 });
