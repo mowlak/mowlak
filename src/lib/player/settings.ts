@@ -18,9 +18,9 @@ export interface Settings {
  * talker rather than a display preference, so it is also what an app with
  * nothing remembered does.
  */
-export const DEFAULT_SETTINGS: Settings = { level: 'onomatopoeia' };
+export const DEFAULT_SETTINGS: Settings = { level: 'sound' };
 
-const LEVELS: readonly LevelKind[] = ['onomatopoeia', 'word'];
+const LEVELS: readonly LevelKind[] = ['sound', 'word'];
 
 function isLevel(value: unknown): value is LevelKind {
 	return LEVELS.some((known) => known === value);

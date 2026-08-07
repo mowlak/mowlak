@@ -13,9 +13,9 @@ function samplePack() {
 				image: 'images/animals/dog.svg',
 				levels: [
 					{
-						kind: 'onomatopoeia',
+						kind: 'sound',
 						text: 'hau hau',
-						audio: 'pl/audio/animals/dog.onomatopoeia.m4a'
+						audio: 'pl/audio/animals/dog.sound.m4a'
 					},
 					{ kind: 'word', text: 'pies', audio: 'pl/audio/animals/dog.word.m4a' }
 				],
@@ -68,6 +68,6 @@ describe('loadPack', () => {
 		pack.cards[0].levels.reverse();
 		const fetchStub = serving(pack);
 
-		await expect(loadPack(fetchStub, 'pl', 'animals')).rejects.toThrow(/onomatopoeia level/);
+		await expect(loadPack(fetchStub, 'pl', 'animals')).rejects.toThrow(/sound level/);
 	});
 });

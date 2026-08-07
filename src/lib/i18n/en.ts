@@ -43,7 +43,7 @@ export const en: Strings = {
 			heading: 'How it works',
 			// The two Polish words stay Polish: they are what the child will
 			// hear, and the gloss beside them is the translation.
-			body: 'Onomatopoeia first — in Polish speech-therapy practice this is the classic road to first words, because "hau hau" is easier than "pies" (dog). Your child looks at a picture, hears a warm human voice — not a sound effect — and repeats when they feel like it. No testing, no grading. When the child is ready, a parent switches the level to full words.'
+			body: 'Onomatopoeia first — in Polish speech-therapy practice this is the classic road to first words, because "hau hau" is easier than "piesek" (dog). Your child looks at a picture, hears a warm human voice — not a sound effect — and repeats when they feel like it. No testing, no grading. When the child is ready, a parent switches the level to full words.'
 		},
 		name: {
 			heading: 'The name',
@@ -85,7 +85,7 @@ export const en: Strings = {
 			title: 'For the parent',
 			levelLegend: 'Level',
 			levelOnomatopoeia: 'sounds (hau hau)',
-			levelWord: 'words (pies)',
+			levelWord: 'words (piesek)',
 			leave: 'Back to the site',
 			close: 'Close'
 		},

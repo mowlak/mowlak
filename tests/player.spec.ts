@@ -193,7 +193,7 @@ test('a whole session never leaves the origin', async ({ page, baseURL }) => {
 	await playThrough(page, root);
 
 	await holdGate(page, 3400);
-	await page.getByLabel('słowa (pies)').check();
+	await page.getByLabel('słowa (piesek)').check();
 	await page.getByRole('button', { name: 'Zamknij' }).click();
 	await expect(page.locator(PANEL)).toHaveCount(0);
 
@@ -229,11 +229,11 @@ test('the parent chooses which level the picture speaks', async ({ page }) => {
 
 	await page.click(PICTURE);
 	await expect(root).toHaveAttribute('data-state', 'playing');
-	expect(await audioSource(page)).toContain('.onomatopoeia.');
+	expect(await audioSource(page)).toContain('.sound.');
 	await expectState(root, 'played');
 
 	await holdGate(page, 3400);
-	await page.getByLabel('słowa (pies)').check();
+	await page.getByLabel('słowa (piesek)').check();
 	await page.getByRole('button', { name: 'Zamknij' }).click();
 	await expect(page.locator(PANEL)).toHaveCount(0);
 

@@ -62,9 +62,9 @@ function card(id, onomatopoeia, word) {
 		image: `images/animals/${id}.svg`,
 		levels: [
 			{
-				kind: 'onomatopoeia',
+				kind: 'sound',
 				text: onomatopoeia,
-				audio: `pl/audio/animals/${id}.onomatopoeia.m4a`
+				audio: `pl/audio/animals/${id}.sound.m4a`
 			},
 			{ kind: 'word', text: word, audio: `pl/audio/animals/${id}.word.m4a` }
 		]
@@ -79,9 +79,9 @@ describe('buildPlan', () => {
 
 		expect(clips).toHaveLength(4);
 		expect(clips.map((clip) => clip.path)).toEqual([
-			'pl/audio/animals/dog.onomatopoeia.m4a',
+			'pl/audio/animals/dog.sound.m4a',
 			'pl/audio/animals/dog.word.m4a',
-			'pl/audio/animals/cow.onomatopoeia.m4a',
+			'pl/audio/animals/cow.sound.m4a',
 			'pl/audio/animals/cow.word.m4a'
 		]);
 		expect(clips.map((clip) => clip.text)).toEqual(['hau hau', 'pies', 'mu', 'krowa']);
@@ -102,8 +102,8 @@ describe('buildPlan', () => {
 	});
 
 	it('speaks the override while the card keeps saying what the canon says', () => {
-		const clips = buildPlan(PACK, config({ tts_overrides: { 'cow.onomatopoeia': 'muu' } }));
-		const clip = clips.find((entry) => entry.card === 'cow' && entry.kind === 'onomatopoeia');
+		const clips = buildPlan(PACK, config({ tts_overrides: { 'cow.sound': 'muu' } }));
+		const clip = clips.find((entry) => entry.card === 'cow' && entry.kind === 'sound');
 
 		expect(clip?.text).toBe('muu');
 		expect(clip?.display).toBe('mu');

@@ -37,7 +37,7 @@ function blockedStorage(): Storage {
 
 describe('reading the parent preference', () => {
 	it('starts at the onomatopoeia, which is the way into speech', () => {
-		expect(DEFAULT_SETTINGS.level).toBe('onomatopoeia');
+		expect(DEFAULT_SETTINGS.level).toBe('sound');
 	});
 
 	it('round-trips a choice through storage', () => {
@@ -88,7 +88,7 @@ describe('reading the parent preference', () => {
 		const settings = readSettings(null);
 		settings.level = 'word';
 
-		expect(DEFAULT_SETTINGS.level).toBe('onomatopoeia');
+		expect(DEFAULT_SETTINGS.level).toBe('sound');
 	});
 });
 

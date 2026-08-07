@@ -16,7 +16,7 @@ export const CONTENT_ROOT = '/content';
  * A card is spoken twice: first the onomatopoeia, then the word. That order
  * is the logopedic path into speech and is not a display preference.
  */
-export type LevelKind = 'onomatopoeia' | 'word';
+export type LevelKind = 'sound' | 'word';
 
 export type Level = {
 	kind: LevelKind;
@@ -85,10 +85,7 @@ function readCard(value: unknown, where: string): Card {
 		id: value.id,
 		word: value.word,
 		image: value.image,
-		levels: [
-			readLevel(value.levels[0], 'onomatopoeia', at),
-			readLevel(value.levels[1], 'word', at)
-		],
+		levels: [readLevel(value.levels[0], 'sound', at), readLevel(value.levels[1], 'word', at)],
 		source: value.source
 	};
 	if (Array.isArray(value.variants) && value.variants.every(isText)) {

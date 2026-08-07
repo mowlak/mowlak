@@ -7,7 +7,7 @@ test('the Polish landing page introduces the product and opens the app', async (
 	await expect(page.getByText('Od niemowlaka do mowlaka.')).toBeVisible();
 	await expect(
 		page.getByText(
-			'Spokojna aplikacja do nauki mówienia dla najmłodszych. Dziecko dotyka obrazka, ciepły głos mówi „hau hau” — a kiedy przyjdzie pora, także „pies”. Bez reklam, bez nagród, bez pośpiechu. Za darmo, na zawsze.'
+			'Spokojna aplikacja do nauki mówienia dla najmłodszych. Dziecko dotyka obrazka, ciepły głos mówi „hau hau” — a kiedy przyjdzie pora, także „piesek”. Bez reklam, bez nagród, bez pośpiechu. Za darmo, na zawsze.'
 		)
 	).toBeVisible();
 	await expect(page.getByRole('link', { name: 'Otwórz aplikację' })).toHaveAttribute(

@@ -19,7 +19,7 @@ const PACK_KEYS = ['schema_version', 'language', 'category', 'cards'];
 const CARD_KEYS = ['id', 'word', 'image', 'levels', 'source', 'variants'];
 const LEVEL_KEYS = ['kind', 'text', 'audio'];
 // Position matters: level 1 is the onomatopoeia, level 2 the word.
-const LEVEL_KINDS = ['onomatopoeia', 'word'];
+const LEVEL_KINDS = ['sound', 'word'];
 
 const DEFAULT_ROOT = fileURLToPath(new URL('../content/packs', import.meta.url));
 

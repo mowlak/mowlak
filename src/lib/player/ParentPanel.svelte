@@ -43,9 +43,9 @@
 				<input
 					type="radio"
 					name="level"
-					value="onomatopoeia"
-					checked={level === 'onomatopoeia'}
-					onchange={() => onlevel('onomatopoeia')}
+					value="sound"
+					checked={level === 'sound'}
+					onchange={() => onlevel('sound')}
 				/>
 				<span>{strings.app.panel.levelOnomatopoeia}</span>
 			</label>

@@ -12,7 +12,7 @@ export const pl: Strings = {
 		description:
 			'Spokojna aplikacja do nauki mówienia dla najmłodszych. Bez reklam, bez nagród, bez pośpiechu. Za darmo, na zawsze.',
 		tagline: 'Od niemowlaka do mowlaka.',
-		lede: 'Spokojna aplikacja do nauki mówienia dla najmłodszych. Dziecko dotyka obrazka, ciepły głos mówi „hau hau” — a kiedy przyjdzie pora, także „pies”. Bez reklam, bez nagród, bez pośpiechu. Za darmo, na zawsze.',
+		lede: 'Spokojna aplikacja do nauki mówienia dla najmłodszych. Dziecko dotyka obrazka, ciepły głos mówi „hau hau” — a kiedy przyjdzie pora, także „piesek”. Bez reklam, bez nagród, bez pośpiechu. Za darmo, na zawsze.',
 		// A Polish reader is already holding the language the cards teach.
 		note: null,
 		open: 'Otwórz aplikację',
@@ -42,7 +42,7 @@ export const pl: Strings = {
 		},
 		how: {
 			heading: 'Jak to działa?',
-			body: 'Najpierw wyrażenia dźwiękonaśladowcze — w polskiej logopedii to klasyczna droga do pierwszych słów, bo „hau hau” jest łatwiejsze niż „pies”. Dziecko ogląda obrazek, słyszy ciepły ludzki głos — nie efekt dźwiękowy — i powtarza, kiedy samo zechce. Bez sprawdzania, bez oceniania. Gdy maluch jest gotowy, rodzic przełącza poziom na całe słowa.'
+			body: 'Najpierw wyrażenia dźwiękonaśladowcze — w polskiej logopedii to klasyczna droga do pierwszych słów, bo „hau hau” jest łatwiejsze niż „piesek”. Dziecko ogląda obrazek, słyszy ciepły ludzki głos — nie efekt dźwiękowy — i powtarza, kiedy samo zechce. Bez sprawdzania, bez oceniania. Gdy maluch jest gotowy, rodzic przełącza poziom na całe słowa.'
 		},
 		// Niemowlak and mowlak explain themselves to anyone reading this page
 		// in Polish.
@@ -81,7 +81,7 @@ export const pl: Strings = {
 			title: 'Dla rodzica',
 			levelLegend: 'Poziom',
 			levelOnomatopoeia: 'dźwięki (hau hau)',
-			levelWord: 'słowa (pies)',
+			levelWord: 'słowa (piesek)',
 			leave: 'Wróć na stronę',
 			close: 'Zamknij'
 		},

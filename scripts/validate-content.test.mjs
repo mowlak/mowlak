@@ -31,7 +31,7 @@ function card(id) {
 		word: `word-${id}`,
 		image: `images/animals/${id}.svg`,
 		levels: [
-			{ kind: 'onomatopoeia', text: 'aa', audio: `pl/audio/animals/${id}.onomatopoeia.m4a` },
+			{ kind: 'sound', text: 'aa', audio: `pl/audio/animals/${id}.sound.m4a` },
 			{ kind: 'word', text: `word-${id}`, audio: `pl/audio/animals/${id}.word.m4a` }
 		],
 		source: 'a published work'
@@ -155,8 +155,8 @@ describe('validateContent', () => {
 		value.cards[0].levels.reverse();
 
 		expect(validateContent(build(value)).violations).toEqual([
-			'pl/animals.json: card "dog": level 1: kind must be "onomatopoeia", found "word"',
-			'pl/animals.json: card "dog": level 2: kind must be "word", found "onomatopoeia"'
+			'pl/animals.json: card "dog": level 1: kind must be "sound", found "word"',
+			'pl/animals.json: card "dog": level 2: kind must be "word", found "sound"'
 		]);
 	});
 
@@ -166,7 +166,7 @@ describe('validateContent', () => {
 
 		expect(validateContent(build(value, assetsOf(pack()))).violations).toEqual([
 			'pl/animals.json: card "dog": "levels" must hold exactly 2 levels',
-			'pl/audio/animals/dog.onomatopoeia.m4a: orphan asset, no card refers to it',
+			'pl/audio/animals/dog.sound.m4a: orphan asset, no card refers to it',
 			'pl/audio/animals/dog.word.m4a: orphan asset, no card refers to it'
 		]);
 	});

@@ -99,7 +99,7 @@ Some voices read a two-letter input as an initial rather than a syllable —
 `"<card-id>.<kind>"`:
 
 ```json
-"tts_overrides": { "cow.onomatopoeia": "muu" }
+"tts_overrides": { "cow.sound": "muu" }
 ```
 
 That changes only what is spoken. The text on the card comes from the
