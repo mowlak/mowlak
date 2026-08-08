@@ -40,7 +40,7 @@ describe('loadPack', () => {
 		expect(pack.category).toBe('animals');
 		expect(pack.cards).toHaveLength(1);
 		expect(pack.cards[0].levels[0].text).toBe('hau hau');
-		expect(pack.cards[0].levels[1].kind).toBe('word');
+		expect(pack.cards[0].levels.at(-1)?.kind).toBe('word');
 		expect(pack.cards[0].variants).toEqual(['hau']);
 	});
 
@@ -69,5 +69,24 @@ describe('loadPack', () => {
 		const fetchStub = serving(pack);
 
 		await expect(loadPack(fetchStub, 'pl', 'animals')).rejects.toThrow(/sound level/);
+	});
+
+	it('accepts a card that carries the word level alone', async () => {
+		const pack = samplePack();
+		pack.cards[0].levels = [pack.cards[0].levels[1]];
+		const fetchStub = serving(pack);
+
+		const loaded = await loadPack(fetchStub, 'pl', 'animals');
+
+		expect(loaded.cards[0].levels).toHaveLength(1);
+		expect(loaded.cards[0].levels[0].kind).toBe('word');
+	});
+
+	it('refuses a card whose only level is the sound, because a word is the point', async () => {
+		const pack = samplePack();
+		pack.cards[0].levels = [pack.cards[0].levels[0]];
+		const fetchStub = serving(pack);
+
+		await expect(loadPack(fetchStub, 'pl', 'animals')).rejects.toThrow(/word level/);
 	});
 });

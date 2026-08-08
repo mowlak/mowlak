@@ -13,8 +13,10 @@ export const SCHEMA_VERSION = 0;
 export const CONTENT_ROOT = '/content';
 
 /**
- * A card is spoken twice: first the onomatopoeia, then the word. That order
- * is the logopedic path into speech and is not a display preference.
+ * A card is spoken up to twice: first the onomatopoeia, then the word. That
+ * order is the logopedic path into speech and is not a display preference.
+ * The sound level is optional per card — a pack ships it only when a
+ * recording worth imitating exists — and the word level is always there.
  */
 export type LevelKind = 'sound' | 'word';
 
@@ -32,8 +34,8 @@ export type Card = {
 	word: string;
 	/** Illustration, relative to CONTENT_ROOT. */
 	image: string;
-	/** Exactly two, onomatopoeia first. */
-	levels: [Level, Level];
+	/** `[word]`, or `[sound, word]` once the card has its onomatopoeia clip. */
+	levels: [Level] | [Level, Level];
 	/** The published work the onomatopoeia is taken from. */
 	source: string;
 	/** Other accepted forms of the onomatopoeia, for the parent to read. */
@@ -78,14 +80,19 @@ function readCard(value: unknown, where: string): Card {
 	if (!isText(value.word) || !isText(value.image) || !isText(value.source)) {
 		throw new ContentError(`${at}: incomplete card`);
 	}
-	if (!Array.isArray(value.levels) || value.levels.length !== 2) {
-		throw new ContentError(`${at}: a card needs exactly two levels`);
+	if (!Array.isArray(value.levels) || value.levels.length < 1 || value.levels.length > 2) {
+		throw new ContentError(`${at}: a card needs one or two levels`);
 	}
+	// The word level closes the list; a sound level may only precede it.
+	const levels: [Level] | [Level, Level] =
+		value.levels.length === 1
+			? [readLevel(value.levels[0], 'word', at)]
+			: [readLevel(value.levels[0], 'sound', at), readLevel(value.levels[1], 'word', at)];
 	const card: Card = {
 		id: value.id,
 		word: value.word,
 		image: value.image,
-		levels: [readLevel(value.levels[0], 'sound', at), readLevel(value.levels[1], 'word', at)],
+		levels,
 		source: value.source
 	};
 	if (Array.isArray(value.variants) && value.variants.every(isText)) {

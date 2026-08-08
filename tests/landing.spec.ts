@@ -7,7 +7,7 @@ test('the Polish landing page introduces the product and opens the app', async (
 	await expect(page.getByText('Od niemowlaka do mowlaka.')).toBeVisible();
 	await expect(
 		page.getByText(
-			'Spokojna aplikacja do nauki mówienia dla najmłodszych. Dziecko dotyka obrazka, ciepły głos mówi „hau hau” — a kiedy przyjdzie pora, także „piesek”. Bez reklam, bez nagród, bez pośpiechu. Za darmo, na zawsze.'
+			'Spokojna aplikacja do nauki mówienia dla najmłodszych. Dziecko dotyka obrazka, ciepły głos mówi „piesek” — a dziecko powtarza, kiedy samo zechce. Bez reklam, bez nagród, bez pośpiechu. Za darmo, na zawsze.'
 		)
 	).toBeVisible();
 	await expect(page.getByRole('link', { name: 'Otwórz aplikację' })).toHaveAttribute(
@@ -23,7 +23,7 @@ test('the English landing page introduces the product and opens the app', async 
 	await expect(page.getByText('First words, at a calm pace.')).toBeVisible();
 	await expect(
 		page.getByText(
-			'A calm speech-learning app for toddlers. Your child touches a picture, a warm voice says "hau hau" — and when the time comes, the word. No ads, no rewards, no rush. Free, forever.'
+			'A calm speech-learning app for toddlers. Your child touches a picture, a warm voice says "piesek" (dog) — and your child repeats when they feel like it. No ads, no rewards, no rush. Free, forever.'
 		)
 	).toBeVisible();
 	await expect(page.getByRole('link', { name: 'Open the app' })).toHaveAttribute('href', '/app/en');

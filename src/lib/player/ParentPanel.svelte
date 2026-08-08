@@ -7,7 +7,8 @@
 		strings: Strings;
 		lang: Lang;
 		level: LevelKind;
-		onlevel: (level: LevelKind) => void;
+		/** Null when the pack carries one level and there is nothing to choose. */
+		onlevel: ((level: LevelKind) => void) | null;
 		onclose: () => void;
 	}
 
@@ -36,31 +37,34 @@
 	>
 		<h2>{strings.app.panel.title}</h2>
 
-		<fieldset>
-			<legend>{strings.app.panel.levelLegend}</legend>
+		{#if onlevel}
+			{@const chooseLevel = onlevel}
+			<fieldset>
+				<legend>{strings.app.panel.levelLegend}</legend>
 
-			<label>
-				<input
-					type="radio"
-					name="level"
-					value="sound"
-					checked={level === 'sound'}
-					onchange={() => onlevel('sound')}
-				/>
-				<span>{strings.app.panel.levelOnomatopoeia}</span>
-			</label>
+				<label>
+					<input
+						type="radio"
+						name="level"
+						value="sound"
+						checked={level === 'sound'}
+						onchange={() => chooseLevel('sound')}
+					/>
+					<span>{strings.app.panel.levelOnomatopoeia}</span>
+				</label>
 
-			<label>
-				<input
-					type="radio"
-					name="level"
-					value="word"
-					checked={level === 'word'}
-					onchange={() => onlevel('word')}
-				/>
-				<span>{strings.app.panel.levelWord}</span>
-			</label>
-		</fieldset>
+				<label>
+					<input
+						type="radio"
+						name="level"
+						value="word"
+						checked={level === 'word'}
+						onchange={() => chooseLevel('word')}
+					/>
+					<span>{strings.app.panel.levelWord}</span>
+				</label>
+			</fieldset>
+		{/if}
 
 		<div class="actions">
 			<a href="/{lang}">{strings.app.panel.leave}</a>

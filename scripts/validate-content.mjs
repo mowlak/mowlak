@@ -18,8 +18,10 @@ const ID_PATTERN = /^[a-z][a-z0-9-]*$/;
 const PACK_KEYS = ['schema_version', 'language', 'category', 'cards'];
 const CARD_KEYS = ['id', 'word', 'image', 'levels', 'source', 'variants'];
 const LEVEL_KEYS = ['kind', 'text', 'audio'];
-// Position matters: level 1 is the onomatopoeia, level 2 the word.
-const LEVEL_KINDS = ['sound', 'word'];
+// Position matters: the word level closes the list, and the onomatopoeia may
+// only precede it. A card without a sound level is a card whose recording
+// does not exist yet, not a different kind of card.
+const LEVEL_SHAPES = [['word'], ['sound', 'word']];
 
 const DEFAULT_ROOT = fileURLToPath(new URL('../content/packs', import.meta.url));
 
@@ -207,25 +209,28 @@ function validateCard(card, index, ids, present, referenced, fail) {
 		}
 	}
 
-	if (!Array.isArray(card.levels) || card.levels.length !== LEVEL_KINDS.length) {
-		cardFail(`"levels" must hold exactly ${LEVEL_KINDS.length} levels`);
+	const shape = LEVEL_SHAPES.find(
+		(kinds) => Array.isArray(card.levels) && card.levels.length === kinds.length
+	);
+	if (!Array.isArray(card.levels) || shape === undefined) {
+		cardFail('"levels" must be [word] or [sound, word]');
 		return;
 	}
 	card.levels.forEach((/** @type {unknown} */ level, /** @type {number} */ position) => {
-		validateLevel(level, position, present, referenced, cardFail);
+		validateLevel(level, shape[position], position, present, referenced, cardFail);
 	});
 }
 
 /**
  * @param {unknown} level
+ * @param {string} expected the kind this position must carry
  * @param {number} position
  * @param {Set<string>} present
  * @param {Set<string>} referenced
  * @param {(message: string) => void} cardFail
  * @returns {void}
  */
-function validateLevel(level, position, present, referenced, cardFail) {
-	const expected = LEVEL_KINDS[position];
+function validateLevel(level, expected, position, present, referenced, cardFail) {
 	/** @param {string} message */
 	const levelFail = (message) => cardFail(`level ${position + 1}: ${message}`);
 

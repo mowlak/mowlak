@@ -10,7 +10,7 @@ export const en: Strings = {
 		description:
 			'A calm speech-learning app for toddlers. No ads, no rewards, no rush. Free, forever.',
 		tagline: 'First words, at a calm pace.',
-		lede: 'A calm speech-learning app for toddlers. Your child touches a picture, a warm voice says "hau hau" — and when the time comes, the word. No ads, no rewards, no rush. Free, forever.',
+		lede: 'A calm speech-learning app for toddlers. Your child touches a picture, a warm voice says "piesek" (dog) — and your child repeats when they feel like it. No ads, no rewards, no rush. Free, forever.',
 		// A reader who arrived in English has no way of knowing that the
 		// cards are Polish, and would find out from the first one.
 		note: 'Mowlak teaches Polish first words. The interface also speaks English — for mixed families and Polish families abroad.',
@@ -43,7 +43,7 @@ export const en: Strings = {
 			heading: 'How it works',
 			// The two Polish words stay Polish: they are what the child will
 			// hear, and the gloss beside them is the translation.
-			body: 'Onomatopoeia first — in Polish speech-therapy practice this is the classic road to first words, because "hau hau" is easier than "piesek" (dog). Your child looks at a picture, hears a warm human voice — not a sound effect — and repeats when they feel like it. No testing, no grading. When the child is ready, a parent switches the level to full words.'
+			body: 'Your child looks at a picture, hears a warm voice say the word — not a sound effect — and repeats when they feel like it. No testing, no grading. An onomatopoeia level is in the making — in Polish speech-therapy practice that is the classic road to first words, because "hau hau" is easier than "piesek" (dog). We are recording those with a real voice and will add them when they sound right.'
 		},
 		name: {
 			heading: 'The name',

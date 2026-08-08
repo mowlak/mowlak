@@ -160,12 +160,32 @@ describe('validateContent', () => {
 		]);
 	});
 
-	it('rejects a card with only one level', () => {
+	it('accepts a card that carries the word level alone', () => {
+		const value = pack();
+		value.cards[0].levels.shift();
+
+		const report = validateContent(build(value));
+
+		expect(report.violations).toEqual([]);
+		expect(report.cards).toBe(value.cards.length);
+	});
+
+	it('rejects a card whose only level is the sound', () => {
 		const value = pack();
 		value.cards[0].levels.pop();
 
 		expect(validateContent(build(value, assetsOf(pack()))).violations).toEqual([
-			'pl/animals.json: card "dog": "levels" must hold exactly 2 levels',
+			'pl/animals.json: card "dog": level 1: kind must be "word", found "sound"',
+			'pl/audio/animals/dog.word.m4a: orphan asset, no card refers to it'
+		]);
+	});
+
+	it('rejects a card with no levels at all', () => {
+		const value = pack();
+		value.cards[0].levels = [];
+
+		expect(validateContent(build(value, assetsOf(pack()))).violations).toEqual([
+			'pl/animals.json: card "dog": "levels" must be [word] or [sound, word]',
 			'pl/audio/animals/dog.sound.m4a: orphan asset, no card refers to it',
 			'pl/audio/animals/dog.word.m4a: orphan asset, no card refers to it'
 		]);

@@ -34,6 +34,12 @@
 	const card = $derived(pack.cards[player.index]);
 	const locked = $derived(player.state === 'playing');
 	const canAdvance = $derived(player.state === 'played');
+	// A level is offered to the parent only if some card actually carries it;
+	// today's packs ship words alone, and the sound level returns with its
+	// recordings rather than as a switch that changes nothing.
+	const choosable = $derived(
+		pack.cards.some((one) => one.levels.some((level) => level.kind === 'sound'))
+	);
 
 	function speak() {
 		// The audio lock. Every touch the child makes during playback stops
@@ -153,7 +159,7 @@
 		{strings}
 		{lang}
 		level={settings.level}
-		onlevel={chooseLevel}
+		onlevel={choosable ? chooseLevel : null}
 		onclose={() => (panelOpen = false)}
 	/>
 {/if}

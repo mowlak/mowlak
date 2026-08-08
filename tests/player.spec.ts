@@ -193,7 +193,6 @@ test('a whole session never leaves the origin', async ({ page, baseURL }) => {
 	await playThrough(page, root);
 
 	await holdGate(page, 3400);
-	await page.getByLabel('słowa (piesek)').check();
 	await page.getByRole('button', { name: 'Zamknij' }).click();
 	await expect(page.locator(PANEL)).toHaveCount(0);
 
@@ -224,30 +223,27 @@ test('the pack has no end: the last card leads back to the first', async ({ page
 	expect(cards[12]).toBe(cards[0]);
 });
 
-test('the parent chooses which level the picture speaks', async ({ page }) => {
+test('the picture speaks the word, and no switch pretends otherwise', async ({ page }) => {
+	// The pack ships the word level alone until the onomatopoeia recordings
+	// exist, so the picture must speak the word — and the parent panel must
+	// not offer a level choice that would change nothing. The choosing flow
+	// itself stays in the code and returns with the recordings; this guard is
+	// then replaced by the one in git history that toggles the levels.
 	const root = await openPlayer(page);
 
 	await page.click(PICTURE);
 	await expect(root).toHaveAttribute('data-state', 'playing');
-	expect(await audioSource(page)).toContain('.sound.');
+	expect(await audioSource(page)).toContain('.word.');
 	await expectState(root, 'played');
 
 	await holdGate(page, 3400);
-	await page.getByLabel('słowa (piesek)').check();
+	await expect(page.locator(PANEL)).toBeVisible();
+	await expect(page.locator(`${PANEL} input[type="radio"]`)).toHaveCount(0);
 	await page.getByRole('button', { name: 'Zamknij' }).click();
 	await expect(page.locator(PANEL)).toHaveCount(0);
 
-	await page.click(PICTURE);
-	await expect(root).toHaveAttribute('data-state', 'playing');
-	expect(await audioSource(page)).toContain('.word.');
-
-	// One key, holding one preference, and nothing else anywhere in storage.
-	expect(
-		await page.evaluate(() => ({
-			keys: Object.keys(localStorage),
-			stored: localStorage.getItem('mowlak:settings')
-		}))
-	).toEqual({ keys: ['mowlak:settings'], stored: '{"level":"word"}' });
+	// Nothing was chosen, so nothing is remembered: storage stays empty.
+	expect(await page.evaluate(() => Object.keys(localStorage))).toEqual([]);
 });
 
 test('a clip that will not play leaves the card usable', async ({ page }) => {
