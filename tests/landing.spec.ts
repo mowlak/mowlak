@@ -6,7 +6,9 @@ test('the Polish landing page introduces the product and opens the app', async (
 	// The wordmark carries the name visually; the h1 spells it for screen
 	// readers and search results without repeating it above its own logo.
 	await expect(page.getByRole('heading', { level: 1, name: 'Mowlak' })).toHaveCount(1);
-	await expect(page.getByAltText('Niemowlak z przekreślonym „nie”')).toBeVisible();
+	await expect(
+		page.getByAltText('„mowlak” w dymku mowy; obok „nie”, które właśnie ulatuje')
+	).toBeVisible();
 	await expect(
 		page.getByText(
 			'Spokojna aplikacja do nauki mówienia dla najmłodszych. Dziecko dotyka obrazka, ciepły głos mówi „piesek” — a dziecko powtarza, kiedy samo zechce. Bez reklam, bez nagród, bez pośpiechu. Za darmo, na zawsze.'
@@ -24,7 +26,7 @@ test('the English landing page introduces the product and opens the app', async 
 	await expect(page.getByRole('heading', { level: 1, name: 'Mowlak' })).toHaveCount(1);
 	await expect(
 		page.getByAltText(
-			'"Niemowlak" — Polish for infant, "the not-yet-speaking one" — with its "nie" ("not") crossed out'
+			'"mowlak" spoken in a speech bubble; beside it the "nie" ("not") of "niemowlak" drifts away'
 		)
 	).toBeVisible();
 	await expect(

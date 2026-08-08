@@ -57,19 +57,20 @@
 <section class="hero">
 	<div class="pitch">
 		<!--
-			The wordmark is the headline: the name and its argument in one
-			mark, all lowercase. The h1 keeps the name for screen readers and
-			search results without repeating it above its own logo. Glyphs are
+			The logo is the headline: mowlak spoken inside its bubble, the
+			pale nie already drifting off — the name and its story in one
+			mark. The h1 keeps the name for screen readers and search
+			results without repeating it above its own logo. Glyphs are
 			baked into the file as paths, so the mark cannot fall back to
-			another face and land its accent on the wrong letters.
+			another face.
 		-->
 		<h1 class="spoken-name">Mowlak</h1>
 		<img
 			class="wordmark"
-			src="/wordmark.svg"
+			src="/logo.svg"
 			alt={landing.wordmarkAlt}
-			width="5478"
-			height="1564"
+			width="4991"
+			height="2825"
 			draggable="false"
 		/>
 
@@ -199,9 +200,9 @@
 
 	.wordmark {
 		display: block;
-		width: min(26rem, 100%);
+		width: min(23rem, 100%);
 		height: auto;
-		margin: 0 0 1.6rem;
+		margin: 0 0 1.4rem;
 	}
 
 	.note {
