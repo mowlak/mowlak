@@ -9,7 +9,7 @@
 	// The card the app opens on, borrowed for the picture in the hero. The
 	// mockup is the real thing at rest rather than a drawing of it, so it
 	// cannot come to show something the app does not.
-	const FIRST_PICTURE = `${CONTENT_ROOT}/images/animals/dog.svg`;
+	const FIRST_PICTURE = `${CONTENT_ROOT}/images/animals/dog.png`;
 </script>
 
 {#snippet section(item: Section)}
