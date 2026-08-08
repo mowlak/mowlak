@@ -10,7 +10,7 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
-import { validateContent } from './validate-content.mjs';
+import { validateContent } from '../content/validate-content.mjs';
 
 const PACK_PATH = 'pl/animals.json';
 

@@ -17,6 +17,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v5
+        with:
+          # The packs live in mowlak-content, pinned here as a submodule; a
+          # checkout without them would validate and build an empty app.
+          submodules: true
 
       - uses: actions/setup-node@v5
         with:

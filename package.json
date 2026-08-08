@@ -15,7 +15,7 @@
 		"format": "prettier --write .",
 		"icons": "node scripts/gen-icons.mjs",
 		"lint": "prettier --check . && eslint . && stylelint \"src/**/*.{css,svelte}\" --allow-empty-input",
-		"validate": "node scripts/validate-content.mjs",
+		"validate": "node content/validate-content.mjs",
 		"test": "npm run validate && npm run test:unit && npm run test:e2e",
 		"test:unit": "vitest run",
 		"test:e2e": "playwright test"

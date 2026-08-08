@@ -32,7 +32,7 @@ import {
 	replaceImagePath
 } from './lib/images.mjs';
 import { REPO_ROOT, loadEnvFile, refuseInsideRepo } from './lib/repo.mjs';
-import { validateContent } from '../validate-content.mjs';
+import { validateContent } from '../../content/validate-content.mjs';
 
 const PACK_ROOT = join(REPO_ROOT, 'content/packs');
 const DEFAULT_PACK = join(PACK_ROOT, 'pl/animals.json');

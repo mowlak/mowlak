@@ -24,13 +24,18 @@ tests, and then the browser tests, which build the static site and drive the
 result, so they exercise what actually ships rather than a development
 server.
 
-Teaching content is not code and does not live in `src`: the packs under
-`content/packs/` are the source of truth — one JSON file per language and
-category, beside the images and recordings it names. `npm run validate`
-checks them, and CI runs it too, so a broken pack cannot ship: every card
-names the published work its onomatopoeia comes from, every path resolves,
-and no image or recording is left unused. Development and build runs mirror
-the packs into `static/content/` first, from where the site serves them at
+Teaching content is not code and lives in its own repository:
+[mowlak-content](https://github.com/mowlak/mowlak-content), consumed here
+as a git submodule mounted at `content/` — clone with
+`git clone --recurse-submodules`, or run `git submodule update --init`
+in an existing checkout. Every commit of this repository pins the exact
+content it builds against. The packs under `content/packs/` are the
+source of truth — one JSON file per language and category, beside the
+images and recordings it names. `npm run validate` checks them, and CI
+runs it too, so a broken pack cannot ship: every card names the published
+work its onomatopoeia comes from, every path resolves, and no image or
+recording is left unused. Development and build runs mirror the packs
+into `static/content/` first, from where the site serves them at
 `/content/`. See [content/README.md](content/README.md) for the schema.
 
 ## Interface languages
