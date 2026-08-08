@@ -39,8 +39,9 @@ export interface Strings {
 		// The browser tab and the search result, in that order.
 		title: string;
 		description: string;
-		// The line under the name.
-		tagline: string;
+		// The alt text of the wordmark under the name: „niemowlak” with its
+		// „nie” struck out — the concept shown rather than explained.
+		wordmarkAlt: string;
 		// One paragraph under the name: what the app is for.
 		lede: string;
 		// Which language the cards teach. Only a reader who arrived in

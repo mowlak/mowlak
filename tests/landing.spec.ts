@@ -4,7 +4,7 @@ test('the Polish landing page introduces the product and opens the app', async (
 	await page.goto('/pl');
 
 	await expect(page.getByRole('heading', { level: 1, name: 'Mowlak' })).toBeVisible();
-	await expect(page.getByText('Od niemowlaka do mowlaka.')).toBeVisible();
+	await expect(page.getByAltText('Niemowlak z przekreślonym „nie”')).toBeVisible();
 	await expect(
 		page.getByText(
 			'Spokojna aplikacja do nauki mówienia dla najmłodszych. Dziecko dotyka obrazka, ciepły głos mówi „piesek” — a dziecko powtarza, kiedy samo zechce. Bez reklam, bez nagród, bez pośpiechu. Za darmo, na zawsze.'
@@ -20,7 +20,11 @@ test('the English landing page introduces the product and opens the app', async 
 	await page.goto('/en');
 
 	await expect(page.getByRole('heading', { level: 1, name: 'Mowlak' })).toBeVisible();
-	await expect(page.getByText('First words, at a calm pace.')).toBeVisible();
+	await expect(
+		page.getByAltText(
+			'"Niemowlak" — Polish for infant, "the not-yet-speaking one" — with its "nie" ("not") crossed out'
+		)
+	).toBeVisible();
 	await expect(
 		page.getByText(
 			'A calm speech-learning app for toddlers. Your child touches a picture, a warm voice says "piesek" (dog) — and your child repeats when they feel like it. No ads, no rewards, no rush. Free, forever.'

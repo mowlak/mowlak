@@ -57,7 +57,20 @@
 <section class="hero">
 	<div class="pitch">
 		<h1>Mowlak</h1>
-		<p class="tagline">{landing.tagline}</p>
+		<!--
+			The name's whole argument, shown rather than told: niemowlak — the
+			not-yet-speaking one — with its „nie” crossed out. Glyphs are baked
+			into the file as paths, so the mark cannot fall back to another
+			face and put the slash on the wrong letters.
+		-->
+		<img
+			class="wordmark"
+			src="/wordmark.svg"
+			alt={landing.wordmarkAlt}
+			width="5478"
+			height="1564"
+			draggable="false"
+		/>
 
 		<p class="lede">{landing.lede}</p>
 
@@ -175,29 +188,11 @@
 		font-size: clamp(2.75rem, 6vw, 3.75rem);
 	}
 
-	/*
-		Ink rather than the accent the eye expects here: at this size the
-		accent reads 2.3:1 against the ground, which no weight or size can
-		rescue. The warm note is kept and moved a few millimetres left, where
-		it is a mark and not a word.
-	*/
-	.tagline {
-		margin: 0.9rem 0 1.6rem;
-		font-size: 1.3rem;
-		font-weight: 600;
-		line-height: 1.4;
-		letter-spacing: -0.01em;
-	}
-
-	.tagline::before {
-		content: '';
-		display: inline-block;
-		width: 1.6rem;
-		height: 0.2rem;
-		margin-right: 0.75rem;
-		border-radius: 999px;
-		background: var(--accent);
-		vertical-align: 0.28em;
+	.wordmark {
+		display: block;
+		width: min(22rem, 100%);
+		height: auto;
+		margin: 1.1rem 0 1.6rem;
 	}
 
 	.note {

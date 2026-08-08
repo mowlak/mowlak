@@ -11,7 +11,7 @@ export const pl: Strings = {
 		title: 'Mowlak — nauka mówienia dla najmłodszych',
 		description:
 			'Spokojna aplikacja do nauki mówienia dla najmłodszych. Bez reklam, bez nagród, bez pośpiechu. Za darmo, na zawsze.',
-		tagline: 'Od niemowlaka do mowlaka.',
+		wordmarkAlt: 'Niemowlak z przekreślonym „nie”',
 		lede: 'Spokojna aplikacja do nauki mówienia dla najmłodszych. Dziecko dotyka obrazka, ciepły głos mówi „piesek” — a dziecko powtarza, kiedy samo zechce. Bez reklam, bez nagród, bez pośpiechu. Za darmo, na zawsze.',
 		// A Polish reader is already holding the language the cards teach.
 		note: null,

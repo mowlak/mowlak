@@ -9,7 +9,8 @@ export const en: Strings = {
 		title: 'Mowlak — a calm speech-learning app for toddlers',
 		description:
 			'A calm speech-learning app for toddlers. No ads, no rewards, no rush. Free, forever.',
-		tagline: 'First words, at a calm pace.',
+		wordmarkAlt:
+			'"Niemowlak" — Polish for infant, "the not-yet-speaking one" — with its "nie" ("not") crossed out',
 		lede: 'A calm speech-learning app for toddlers. Your child touches a picture, a warm voice says "piesek" (dog) — and your child repeats when they feel like it. No ads, no rewards, no rush. Free, forever.',
 		// A reader who arrived in English has no way of knowing that the
 		// cards are Polish, and would find out from the first one.
