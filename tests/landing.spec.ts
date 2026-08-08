@@ -3,7 +3,9 @@ import { expect, test } from '@playwright/test';
 test('the Polish landing page introduces the product and opens the app', async ({ page }) => {
 	await page.goto('/pl');
 
-	await expect(page.getByRole('heading', { level: 1, name: 'Mowlak' })).toBeVisible();
+	// The wordmark carries the name visually; the h1 spells it for screen
+	// readers and search results without repeating it above its own logo.
+	await expect(page.getByRole('heading', { level: 1, name: 'Mowlak' })).toHaveCount(1);
 	await expect(page.getByAltText('Niemowlak z przekreślonym „nie”')).toBeVisible();
 	await expect(
 		page.getByText(
@@ -19,7 +21,7 @@ test('the Polish landing page introduces the product and opens the app', async (
 test('the English landing page introduces the product and opens the app', async ({ page }) => {
 	await page.goto('/en');
 
-	await expect(page.getByRole('heading', { level: 1, name: 'Mowlak' })).toBeVisible();
+	await expect(page.getByRole('heading', { level: 1, name: 'Mowlak' })).toHaveCount(1);
 	await expect(
 		page.getByAltText(
 			'"Niemowlak" — Polish for infant, "the not-yet-speaking one" — with its "nie" ("not") crossed out'

@@ -56,13 +56,14 @@
 
 <section class="hero">
 	<div class="pitch">
-		<h1>Mowlak</h1>
 		<!--
-			The name's whole argument, shown rather than told: niemowlak — the
-			not-yet-speaking one — with its „nie” crossed out. Glyphs are baked
-			into the file as paths, so the mark cannot fall back to another
-			face and put the slash on the wrong letters.
+			The wordmark is the headline: the name and its argument in one
+			mark, all lowercase. The h1 keeps the name for screen readers and
+			search results without repeating it above its own logo. Glyphs are
+			baked into the file as paths, so the mark cannot fall back to
+			another face and land its accent on the wrong letters.
 		-->
+		<h1 class="spoken-name">Mowlak</h1>
 		<img
 			class="wordmark"
 			src="/wordmark.svg"
@@ -184,15 +185,23 @@
 		}
 	}
 
-	.hero h1 {
-		font-size: clamp(2.75rem, 6vw, 3.75rem);
+	/* Present to a screen reader and a search engine, invisible beside its
+	   own logo: the mark says the name, the heading merely spells it. */
+	.spoken-name {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		margin: -1px;
+		clip-path: inset(50%);
+		overflow: hidden;
+		white-space: nowrap;
 	}
 
 	.wordmark {
 		display: block;
-		width: min(22rem, 100%);
+		width: min(26rem, 100%);
 		height: auto;
-		margin: 1.1rem 0 1.6rem;
+		margin: 0 0 1.6rem;
 	}
 
 	.note {
